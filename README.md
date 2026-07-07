@@ -41,7 +41,6 @@ This project investigates how to combine artistic 2D-style control with interact
 
 ## References
 
-- Live2D-style character rendering
 - Anime and game NPR techniques
 - Pencil+4
 - Arc System Works rendering style
