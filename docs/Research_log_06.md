@@ -68,4 +68,61 @@ UnpackGBuffers() 이후 생성된 GBufferData는 Material 종류에 따라 Surfa
 
 ## 연구 방향 및 향후 구현 계획
 
-이번 분석을 통해 Deferred Rendering에서 가장 중요한 것은 Lighting 함수 자체보다 Lighting 이전에 어떤 데이터를 준비하느냐라는 점을 새롭게 이해하였다. 즉 Stylized Rendering의 핵심은 기존 BRDF 계산식을 수정하는 것이 아니라 Stylized Rendering에 필요한 데이터를 어떻게 생성하고 관리할 것인가에 있다. 따라서 향후 연구는 Style Texture 제작, Material Buffer 설계, Style Volume 생성, Style Mask 계산, Pattern 매핑, Falloff 설계, Environment Color 적용, Style LOD 구현, 최종 Blend Rule 설계 순으로 진행할 예정이다. 최종적으로는 기존의 물리 기반 BRDF를 완전히 대체하는 LightingStylized()를 구현하여 Live2D와 같은 아티스트 중심의 3D Stylized Rendering Pipeline을 구축하는 것을 목표로 한다.
+# 구현 예정 핵심 연구 요소
+
+본 연구에서 직접 구현해야 하는 핵심 요소는 다음과 같이 정리된다.
+
+1. **Style Texture 제작**
+   - 연필 스트로크
+   - 해칭
+   - 수채화 패턴
+   - PVC / Latex 반사
+   - Angel Ring
+   - Material별 스타일 텍스처 제작
+
+2. **Style Texture 매핑 방식**
+   - Material별 매핑
+   - Object Space 기반 매핑
+   - Bounding Box / Style Volume 기반 매핑
+   - 필요 시 Triplanar 또는 UV 비교 연구
+
+3. **Material Buffer 설계**
+   - Hair
+   - Face
+   - Cloth
+   - Latex
+   - Eye
+   - Accessory
+   - Material ID 관리
+
+4. **Style Mask 생성**
+   - Directional Style Field
+   - Sphere Style Volume
+   - Cone Style Volume
+   - Bounding Box 기반 영역 지정
+   - Material Mask 생성
+
+5. **Falloff 설계**
+   - 거리 기반 감쇠
+   - 방향 기반 감쇠
+   - 부위별 감쇠(Field)
+   - 아티스트가 조절 가능한 Falloff Texture
+
+6. **환경색 및 거리 기반 스타일 계산**
+   - Occlusion 기반 환경색 수용량
+   - Camera Distance 기반 Style LOD
+   - 선 두께 변화
+   - Pattern 밀도 변화
+
+7. **LightingStylized() 구현**
+   - Material Buffer
+   - Style Volume
+   - Pattern Texture
+   - Falloff
+   - Shadow
+   - Environment Color
+   - Highlight
+   - Stroke
+   - 최종 결합 규칙(Blend Rule)
+
+최종적으로는 기존 BRDF를 대체하는 **LightingStylized()** 를 구현하여, 물리 기반 반사보다 아티스트가 의도한 스타일을 우선하는 Live2D 스타일의 3D Shader를 목표로 한다.
